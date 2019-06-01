@@ -12,12 +12,12 @@ exports.up = function(knex, Promise) {
     tbl.string('notes').notNullable();
     tbl.boolean('completed').defaultTo(false);
     tbl
-            .integer('project_id')
-            .references('id')
-            .inTable('projects')
-            .onDelete('CASCADE')
-            .onUpdate('CASCADE')
-            .notNullable();
+        .integer('project_id')
+        .references('id')
+        .inTable('projects')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE')
+        .notNullable();
   })
 };
 
