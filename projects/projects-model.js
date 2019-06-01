@@ -24,6 +24,10 @@ async function getProject(id) {
         .from('projects as p')
         .join('actions as a', 'p.id', 'a.project_id')
         .where('p.id', Number(id));
-    const result = {...projects[0], actions: actions};
-    return result;
+    if(projects.length !== 0) {
+        const result = {...projects[0], actions: actions};
+        return result;
+    } else {
+        return projects[0];
+    }
 }

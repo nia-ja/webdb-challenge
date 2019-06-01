@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const project = await Projects.getProject(req.params.id);
-        if (project.length !== 0) {
+        if (project) {
             res.status(200).json(project);
         } else {
             res.status(404).json({ message: "The project with the specified ID does not exist." })
