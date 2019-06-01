@@ -1,0 +1,29 @@
+const knex = require('knex');
+const knexConfig = require('../knexfile.js');
+const db = knex(knexConfig.development);
+
+module.exports = {
+    addProject,
+    getProject
+};
+
+// `addProject(project)` adds the project to the database and return the `id` of the new project.
+function addProject(project) {
+    return db('projects')
+      .insert(project)
+      .then(ids => ({id: ids[0]}));
+}
+
+//`getProject(id)` returns the project with the provided `id`. The project includes all actions for this project
+
+async function getProject(id) {
+    const projects =  await db.select('*')
+        .from('projects as p')
+        .where('p.id', Number(id));
+    const actions = await db.select('a.id', 'a.description', 'a.notes', 'a.completed')
+        .from('projects as p')
+        .join('actions as a', 'p.id', 'a.project_id')
+        .where('p.id', Number(id));
+    const result = {...projects[0], actions: actions};
+    return result;
+}
