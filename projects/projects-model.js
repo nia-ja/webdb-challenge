@@ -3,9 +3,15 @@ const knexConfig = require('../knexfile.js');
 const db = knex(knexConfig.development);
 
 module.exports = {
+    getProjects,
     addProject,
     getProject
 };
+
+// `getProjects()` returns all projects from the db
+function getProjects() {
+    return db('projects');
+}
 
 // `addProject(project)` adds the project to the database and return the `id` of the new project.
 function addProject(project) {

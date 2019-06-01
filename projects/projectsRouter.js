@@ -4,6 +4,19 @@ const Projects  = require('./projects-model.js');
 
 const router = express.Router();
 
+// GET for /api/projects
+router.get('/', async (req, res) => {
+    try {
+        const projects = await Projects.getProjects();
+        res.status(200).json(projects);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error retrieving projects',
+            error: error
+        });
+    }
+})
+
 // POST for /api/projects
 // returns an id of the new project
 router.post('/', async (req, res) => {
