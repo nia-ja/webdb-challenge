@@ -46,4 +46,18 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+// DELETE for /api/projects
+router.delete('/:id', async (req, res) => {
+    try {
+        const count = await Projects.deleteProject(req.params.id);
+        if (count > 0) {
+            res.status(200).json(count);
+        } else {
+            res.status(404).json({ message: 'Project with specified id doesn\'t exist'});
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting project', error: error });
+    }
+})
+
 module.exports = router;

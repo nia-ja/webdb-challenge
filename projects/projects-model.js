@@ -5,7 +5,8 @@ const db = knex(knexConfig.development);
 module.exports = {
     getProjects,
     addProject,
-    getProject
+    getProject,
+    deleteProject
 };
 
 // `getProjects()` returns all projects from the db
@@ -20,8 +21,7 @@ function addProject(project) {
       .then(ids => ({id: ids[0]}));
 }
 
-//`getProject(id)` returns the project with the provided `id`. The project includes all actions for this project
-
+// `getProject(id)` returns the project with the provided `id`. The project includes all actions for this project
 async function getProject(id) {
     const projects =  await db.select('*')
         .from('projects as p')
@@ -36,4 +36,13 @@ async function getProject(id) {
     } else {
         return projects[0];
     }
+}
+
+// `deleteProject(id)` returns number of deleted entries
+async function deleteProject(id) {
+    const count = await db.select('*')
+        .from('projects')
+        .where({id: id})
+        .del()
+    return count;
 }

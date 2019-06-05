@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
 })
 
 // GET BY ID for the /api/actions
+// returns number of deleted entries
 router.get('/:id', async (req, res) => {
     try {
         const action = await Actions.getAction(req.params.id);
